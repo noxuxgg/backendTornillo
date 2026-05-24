@@ -12,8 +12,8 @@ async function bootstrap() {
   // habilitando (DOCS API) con swagger
 
   const config = new DocumentBuilder()
-  .setTitle("Proyecto BACKEND BALOO")
-  .setDescription("Backend para la aplicación de repostería Baloo")
+  .setTitle("Proyecto BACKEND TORNILLO LOKO")
+  .setDescription("Backend para la aplicación de TORNILLO LOKO")
   .setVersion("1.0")
   .addTag("Backend Nest")
   .build();
