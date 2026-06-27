@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './modules/users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { OrdenesModule } from './modules/ordenes/ordenes.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -21,7 +22,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       ],
       synchronize: false
     }),
-    UsersModule],
+    UsersModule,
+    OrdenesModule],
   controllers: [AppController],
   providers: [AppService],
 })
