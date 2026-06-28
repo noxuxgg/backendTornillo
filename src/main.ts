@@ -8,7 +8,8 @@ async function bootstrap() {
 
   // habilitando (validacones) con class-validation
   app.useGlobalPipes(new ValidationPipe())
-
+  
+  app.enableCors();
   // habilitando (DOCS API) con swagger
 
   const config = new DocumentBuilder()
