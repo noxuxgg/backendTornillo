@@ -2,14 +2,18 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from './modules/users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { OrdenesModule } from './modules/ordenes/ordenes.module';
+import { RolesModule } from './modules/roles/roles.module';
+import { UsuariosModule } from './modules/usuarios/usuarios.module';
+import { ElectrodomesticosModule } from './modules/electrodomesticos/electrodomesticos.module';
+import { DiagnosticosModule } from './modules/diagnosticos/diagnosticos.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({
-    ignoreEnvFile: true
-  }),
+  imports: [
+    ConfigModule.forRoot({
+      ignoreEnvFile: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -17,13 +21,15 @@ import { OrdenesModule } from './modules/ordenes/ordenes.module';
       username: 'postgres',
       password: 'postgresql',
       database: 'dbTornillo',
-      entities: [
-        __dirname + '/../**/*.entity{.ts,.js}'
-      ],
-      synchronize: false
+      entities: [__dirname + '/modules/**/*.entity{.ts,.js}'],
+      synchronize: false,
     }),
-    UsersModule,
-    OrdenesModule],
+    RolesModule,
+    UsuariosModule,
+    ElectrodomesticosModule,
+    DiagnosticosModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
