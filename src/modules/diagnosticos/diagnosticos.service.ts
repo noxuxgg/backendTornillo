@@ -28,19 +28,30 @@ export class DiagnosticosService {
   }
 
   async update(id: number, dto: UpdateDiagnosticoDto): Promise<Diagnostico> {
-    const item = await this.findOne(id);
+    const item = await this.repo.findOne({
+      where: { id },
+      relations: ['usuario']
+    });
+
+    if (!item) throw new NotFoundException(`Diagnóstico con ID ${id} no encontrado`);
+
     if (dto.usuarioId !== undefined) {
       item.usuarioId = dto.usuarioId;
       (item as any).usuario = null;
     }
     const { usuarioId, ...rest } = dto;
     this.repo.merge(item, rest);
-
     return await this.repo.save(item);
   }
 
   async remove(id: number): Promise<void> {
     const diagnostic = await this.findOne(id);
     await this.repo.remove(diagnostic);
+  }
+
+  async funListar(): Promise<Diagnostico[]> {
+    return await this.repo.find({
+      relations: ['usuario', 'servicio']
+    });
   }
 }
