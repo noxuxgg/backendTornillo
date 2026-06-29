@@ -28,4 +28,15 @@ export class CreateServicioDto {
   @IsString()
   @IsOptional()
   estado?:string;
+
+  // NUEVOS VALIDADORES
+  @IsNumber()
+  costoAproximado:number;
+
+  @IsNumber()
+  adelanto:number;
+
+  @IsOptional()
+  @IsNumber()
+  electrodomesticoId?:number;
 }
