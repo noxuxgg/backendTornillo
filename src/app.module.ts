@@ -13,6 +13,7 @@ import { PresupuestosModule } from './modules/ordenes/presupuestos/presupuestos.
 import { CategoriasModule } from './modules/categorias/categorias.module';
 import { UnidadesMedidaModule } from './modules/unidades-medida/unidades-medida.module';
 import { ProveedoresModule } from './modules/proveedores/proveedores.module';
+import { DetalleComprasModule } from './modules/detalle-compras/detalle-compras.module';
 
 
 @Module({
@@ -39,7 +40,8 @@ import { ProveedoresModule } from './modules/proveedores/proveedores.module';
     PresupuestosModule,
     CategoriasModule,
     UnidadesMedidaModule,
-    ProveedoresModule
+    ProveedoresModule,
+    DetalleComprasModule
   ],
   controllers: [AppController],
   providers: [AppService],

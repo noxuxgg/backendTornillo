@@ -1,26 +1,22 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DetalleInsumosServicio } from './entities/detalle-insumos-servicio.entity';
 import { CreateDetalleInsumosServicioDto } from './dto/create-detalle-insumos-servicio.dto';
-import { UpdateDetalleInsumosServicioDto } from './dto/update-detalle-insumos-servicio.dto';
 
 @Injectable()
 export class DetalleInsumosServicioService {
-  create(createDetalleInsumosServicioDto: CreateDetalleInsumosServicioDto) {
-    return 'This action adds a new detalleInsumosServicio';
+  constructor(
+    @InjectRepository(DetalleInsumosServicio)
+    private readonly detalleInsumoServicioRepository: Repository<DetalleInsumosServicio>,
+  ) {}
+
+  async create(createDto: CreateDetalleInsumosServicioDto): Promise<DetalleInsumosServicio> {
+    const nuevo = this.detalleInsumoServicioRepository.create(createDto);
+    return await this.detalleInsumoServicioRepository.save(nuevo);
   }
 
-  findAll() {
-    return `This action returns all detalleInsumosServicio`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} detalleInsumosServicio`;
-  }
-
-  update(id: number, updateDetalleInsumosServicioDto: UpdateDetalleInsumosServicioDto) {
-    return `This action updates a #${id} detalleInsumosServicio`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} detalleInsumosServicio`;
+  async findAll(): Promise<DetalleInsumosServicio[]> {
+    return await this.detalleInsumoServicioRepository.find({ relations: ['lote'] });
   }
 }

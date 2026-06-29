@@ -1,26 +1,40 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Insumo } from './entities/insumo.entity';
 import { CreateInsumoDto } from './dto/create-insumo.dto';
-import { UpdateInsumoDto } from './dto/update-insumo.dto';
 
 @Injectable()
 export class InsumosService {
-  create(createInsumoDto: CreateInsumoDto) {
-    return 'This action adds a new insumo';
+  constructor(
+    @InjectRepository(Insumo)
+    private readonly insumoRepository: Repository<Insumo>,
+  ) {}
+
+  async create(createInsumoDto: CreateInsumoDto): Promise<Insumo> {
+    const nuevo = this.insumoRepository.create(createInsumoDto);
+    return await this.insumoRepository.save(nuevo);
   }
 
-  findAll() {
-    return `This action returns all insumos`;
+  async findAll(): Promise<Insumo[]> {
+    // Usamos relations para traer la info de categoría y unidad si lo necesitas en Bruno
+    return await this.insumoRepository.find({ relations: ['categoria', 'unidadesMedida'] });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} insumo`;
+  async findOne(id: number): Promise<Insumo> {
+    const insumo = await this.insumoRepository.findOne({
+      where: { id },
+      relations: ['categoria', 'unidadesMedida'],
+    });
+    if (!insumo) throw new NotFoundException(`Insumo con ID ${id} no encontrado`);
+    return insumo;
   }
 
-  update(id: number, updateInsumoDto: UpdateInsumoDto) {
-    return `This action updates a #${id} insumo`;
+  update(id: number, updateInsumoDto: any) {
+    return `Este método actualiza el insumo con ID #${id}`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} insumo`;
+    return `Este método elimina el insumo con ID #${id}`;
   }
 }

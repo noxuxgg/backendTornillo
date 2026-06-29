@@ -1,26 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Factura } from './entities/factura.entity';
 import { CreateFacturaDto } from './dto/create-factura.dto';
-import { UpdateFacturaDto } from './dto/update-factura.dto';
 
 @Injectable()
 export class FacturasService {
-  create(createFacturaDto: CreateFacturaDto) {
-    return 'This action adds a new factura';
+  constructor(
+    @InjectRepository(Factura)
+    private readonly facturaRepository: Repository<Factura>,
+  ) {}
+
+  async create(createFacturaDto: CreateFacturaDto): Promise<Factura> {
+    const nueva = this.facturaRepository.create(createFacturaDto);
+    return await this.facturaRepository.save(nueva);
   }
 
-  findAll() {
-    return `This action returns all facturas`;
+  async findAll(): Promise<Factura[]> {
+    return await this.facturaRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} factura`;
-  }
-
-  update(id: number, updateFacturaDto: UpdateFacturaDto) {
-    return `This action updates a #${id} factura`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} factura`;
+  async findOne(id: number): Promise<Factura> {
+    const factura = await this.facturaRepository.findOneBy({ id });
+    if (!factura) throw new NotFoundException(`Factura con ID ${id} no encontrado`);
+    return factura;
   }
 }

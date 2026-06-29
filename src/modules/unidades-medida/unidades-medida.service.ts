@@ -25,4 +25,12 @@ export class UnidadesMedidaService {
     if (!um) throw new NotFoundException(`Unidad de Medida con ID ${id} no encontrada`);
     return um;
   }
+
+  update(id: number, updateUnidadesMedidaDto: any) {
+    return `Este método actualiza la unidad de medida con ID #${id}`;
+  }
+
+  remove(id: number) {
+    return `Este método elimina la unidad de medida con ID #${id}`;
+  }
 }

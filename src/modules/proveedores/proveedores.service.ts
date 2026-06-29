@@ -25,4 +25,12 @@ export class ProveedoresService {
     if (!proveedor) throw new NotFoundException(`Proveedor con ID ${id} no encontrado`);
     return proveedor;
   }
+
+  update(id: number, updateProveedorDto: any) {
+    return `Este método actualiza el proveedor con ID #${id}`;
+  }
+
+  remove(id: number) {
+    return `Este método elimina el proveedor con ID #${id}`;
+  }
 }
