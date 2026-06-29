@@ -1,26 +1,28 @@
-import { Injectable } from '@nestjs/common';
-import { CreateProveedoreDto } from './dto/create-proveedore.dto';
-import { UpdateProveedoreDto } from './dto/update-proveedore.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Proveedor } from './entities/proveedore.entity';
+import { CreateProveedorDto } from './dto/create-proveedore.dto';
 
 @Injectable()
 export class ProveedoresService {
-  create(createProveedoreDto: CreateProveedoreDto) {
-    return 'This action adds a new proveedore';
+  constructor(
+    @InjectRepository(Proveedor)
+    private readonly proveedorRepository: Repository<Proveedor>,
+  ) {}
+
+  async create(createProveedorDto: CreateProveedorDto): Promise<Proveedor> {
+    const nuevo = this.proveedorRepository.create(createProveedorDto);
+    return await this.proveedorRepository.save(nuevo);
   }
 
-  findAll() {
-    return `This action returns all proveedores`;
+  async findAll(): Promise<Proveedor[]> {
+    return await this.proveedorRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} proveedore`;
-  }
-
-  update(id: number, updateProveedoreDto: UpdateProveedoreDto) {
-    return `This action updates a #${id} proveedore`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} proveedore`;
+  async findOne(id: number): Promise<Proveedor> {
+    const proveedor = await this.proveedorRepository.findOneBy({ id });
+    if (!proveedor) throw new NotFoundException(`Proveedor con ID ${id} no encontrado`);
+    return proveedor;
   }
 }
