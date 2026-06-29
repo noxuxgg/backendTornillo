@@ -10,6 +10,11 @@ import { DiagnosticosModule } from './modules/diagnosticos/diagnosticos.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ServiciosModule } from './modules/ordenes/servicios/servicios.module';
 import { PresupuestosModule } from './modules/ordenes/presupuestos/presupuestos.module';
+import { CategoriasModule } from './modules/categorias/categorias.module';
+import { UnidadesMedidaModule } from './modules/unidades-medida/unidades-medida.module';
+import { ProveedoresModule } from './modules/proveedores/proveedores.module';
+
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -31,7 +36,10 @@ import { PresupuestosModule } from './modules/ordenes/presupuestos/presupuestos.
     DiagnosticosModule,
     AuthModule,
     ServiciosModule,
-    PresupuestosModule
+    PresupuestosModule,
+    CategoriasModule,
+    UnidadesMedidaModule,
+    ProveedoresModule
   ],
   controllers: [AppController],
   providers: [AppService],
