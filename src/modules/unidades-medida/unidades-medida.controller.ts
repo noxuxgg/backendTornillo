@@ -22,7 +22,7 @@ export class UnidadesMedidaController {
     return this.unidadesMedidaService.findOne(+id);
   }
 
-  @Patch(':id')
+  /*@Patch(':id')
   update(@Param('id') id: string, @Body() updateUnidadesMedidaDto: UpdateUnidadesMedidaDto) {
     return this.unidadesMedidaService.update(+id, updateUnidadesMedidaDto);
   }
@@ -30,5 +30,5 @@ export class UnidadesMedidaController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.unidadesMedidaService.remove(+id);
-  }
+  }*/
 }
