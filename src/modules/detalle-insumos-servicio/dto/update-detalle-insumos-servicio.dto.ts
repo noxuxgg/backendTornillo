@@ -1,4 +1,6 @@
 import { PartialType } from '@nestjs/swagger';
-import { CreateDetalleInsumosServicioDto } from './create-detalle-insumos-servicio.dto';
+import { DetalleInsumosServicio } from '../entities/detalle-insumos-servicio.entity';
+import { CreateInsumoDto } from '../../insumos/dto/create-insumo.dto';
+import { CreateDetalleInsumoServicioDto } from './create-detalle-insumos-servicio.dto';
 
-export class UpdateDetalleInsumosServicioDto extends PartialType(CreateDetalleInsumosServicioDto) {}
+export class UpdateDetalleInsumosServicioDto extends PartialType(CreateDetalleInsumoServicioDto) {}
