@@ -6,7 +6,7 @@ export class Pago {
   id: number;
 
   @Column({ type: 'integer' })
-  servicioId: number; // Relación lógica con el módulo del Dev 2
+  servicioId: number;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   montoTotal: number;
