@@ -8,7 +8,8 @@ import { UsuariosModule } from './modules/usuarios/usuarios.module';
 import { ElectrodomesticosModule } from './modules/electrodomesticos/electrodomesticos.module';
 import { DiagnosticosModule } from './modules/diagnosticos/diagnosticos.module';
 import { AuthModule } from './modules/auth/auth.module';
-
+import { ServiciosModule } from './modules/ordenes/servicios/servicios.module';
+import { PresupuestosModule } from './modules/ordenes/presupuestos/presupuestos.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -29,6 +30,8 @@ import { AuthModule } from './modules/auth/auth.module';
     ElectrodomesticosModule,
     DiagnosticosModule,
     AuthModule,
+    ServiciosModule,
+    PresupuestosModule
   ],
   controllers: [AppController],
   providers: [AppService],

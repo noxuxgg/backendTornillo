@@ -18,11 +18,16 @@ export class ServiciosService {
   }
 
   async findAll():Promise<Servicio[]> {
-    return await this.servRepo.find();
+    return await this.servRepo.find({
+      relations:['cliente','tecnico']
+    });
   }
 
   async findOne(id:number):Promise<Servicio> {
-    const reg=await this.servRepo.findOne({where:{id}});
+    const reg=await this.servRepo.findOne({
+      where:{id},
+      relations:['cliente','tecnico']
+    });
     if(!reg) throw new NotFoundException(`Servicio #${id} no encontrado`);
     return reg;
   }
@@ -34,7 +39,7 @@ export class ServiciosService {
   }
 
   async remove(id:number):Promise<void> {
-    const reg=await this.findOne(id);
-    await this.servRepo.remove(reg);
+    const reg=await this.findOne(id); // Esto sigue validando que el servicio exista (si no, lanza 404)
+  await this.servRepo.delete(id);
   }
 }

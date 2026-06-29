@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Role } from '../../roles/entities/role.entity';
 import { Diagnostico } from '../../diagnosticos/entities/diagnostico.entity';
+import { Servicio } from '../../ordenes/servicios/entities/servicio.entity';
 
 @Entity('usuarios')
 export class Usuario {
@@ -31,4 +32,10 @@ export class Usuario {
 
   @OneToMany(() => Diagnostico, (diagnostico) => diagnostico.usuario)
   diagnosticos: Diagnostico[];
+
+  @OneToMany(()=>Servicio,(servicio)=>servicio.cliente)
+serviciosComoCliente:Servicio[];
+
+  @OneToMany(()=>Servicio,(servicio)=>servicio.tecnico)
+  serviciosComoTecnico:Servicio[];
 }
