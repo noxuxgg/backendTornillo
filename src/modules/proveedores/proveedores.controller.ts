@@ -22,7 +22,7 @@ export class ProveedoresController {
     return this.proveedoresService.findOne(+id);
   }
 
-  /*@Patch(':id')
+  @Patch(':id')
   update(@Param('id') id: string, @Body() updateProveedoreDto: UpdateProveedorDto) {
     return this.proveedoresService.update(+id, updateProveedoreDto);
   }
@@ -30,5 +30,5 @@ export class ProveedoresController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.proveedoresService.remove(+id);
-  }*/
+  }
 }

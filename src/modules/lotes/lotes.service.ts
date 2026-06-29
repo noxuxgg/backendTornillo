@@ -1,26 +1,39 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Lote } from './entities/lote.entity';
 import { CreateLoteDto } from './dto/create-lote.dto';
-import { UpdateLoteDto } from './dto/update-lote.dto';
 
 @Injectable()
 export class LotesService {
-  create(createLoteDto: CreateLoteDto) {
-    return 'This action adds a new lote';
+  constructor(
+    @InjectRepository(Lote)
+    private readonly loteRepository: Repository<Lote>,
+  ) {}
+
+  async create(createLoteDto: CreateLoteDto): Promise<Lote> {
+    const nuevo = this.loteRepository.create(createLoteDto);
+    return await this.loteRepository.save(nuevo);
   }
 
-  findAll() {
-    return `This action returns all lotes`;
+  async findAll(): Promise<Lote[]> {
+    return await this.loteRepository.find({ relations: ['insumo'] });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} lote`;
+  async findOne(id: number): Promise<Lote> {
+    const lote = await this.loteRepository.findOne({
+      where: { id },
+      relations: ['insumo'],
+    });
+    if (!lote) throw new NotFoundException(`Lote con ID ${id} no encontrado`);
+    return lote;
   }
 
-  update(id: number, updateLoteDto: UpdateLoteDto) {
-    return `This action updates a #${id} lote`;
+  update(id: number, updateLoteDto: any) {
+    return `Este método actualiza el lote con ID #${id}`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} lote`;
+    return `Este método elimina el lote con ID #${id}`;
   }
 }
