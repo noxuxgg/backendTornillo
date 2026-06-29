@@ -14,7 +14,12 @@ import { CategoriasModule } from './modules/categorias/categorias.module';
 import { UnidadesMedidaModule } from './modules/unidades-medida/unidades-medida.module';
 import { ProveedoresModule } from './modules/proveedores/proveedores.module';
 import { DetalleComprasModule } from './modules/detalle-compras/detalle-compras.module';
-
+import { InsumosModule } from './modules/insumos/insumos.module';
+import { ComprasModule } from './modules/compras/compras.module';
+import { PagosModule } from './modules/pagos/pagos.module';
+import { FacturasModule } from './modules/facturas/facturas.module';
+import { DetalleInsumosServicioModule } from './modules/detalle-insumos-servicio/detalle-insumos-servicio.module';
+import { LotesModule } from './modules/lotes/lotes.module';
 
 @Module({
   imports: [
@@ -41,7 +46,13 @@ import { DetalleComprasModule } from './modules/detalle-compras/detalle-compras.
     CategoriasModule,
     UnidadesMedidaModule,
     ProveedoresModule,
-    DetalleComprasModule
+    DetalleComprasModule,
+    InsumosModule,
+    LotesModule,
+    ComprasModule,
+    PagosModule,
+    FacturasModule,
+    DetalleInsumosServicioModule
   ],
   controllers: [AppController],
   providers: [AppService],
