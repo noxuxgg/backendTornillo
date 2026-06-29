@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColum
 import { Presupuesto } from '../../presupuestos/entities/presupuesto.entity';
 import { Diagnostico } from '../../../diagnosticos/entities/diagnostico.entity';
 import { Usuario } from '../../../usuarios/entities/usuario.entity';
-
+import { Electrodomestico } from '../../../electrodomesticos/entities/electrodomestico.entity';
 @Entity('servicios')
 export class Servicio {
   @PrimaryGeneratedColumn()
@@ -29,6 +29,13 @@ export class Servicio {
   @Column({ type: 'varchar', length: 50, default: 'Pendiente' })
   estado: string;
 
+  // NUEVOS CAMPOS
+  @Column({ type:'decimal', precision:10, scale:2, default:0 })
+  costoAproximado:number;
+
+  @Column({ type:'decimal', precision:10, scale:2, default:0 })
+  adelanto:number;
+
   // 1. Relación con el Cliente
     @Column({nullable:true})
     clienteId:number;
@@ -50,4 +57,12 @@ tecnico:Usuario;
 
   @OneToMany(() => Diagnostico, (diagnostico) => diagnostico.servicio)
   diagnosticos: Diagnostico[];
+
+  // NUEVA RELACIÓN A ELECTRODOMÉSTICOS
+  @ManyToOne(()=>Electrodomestico, { eager:true, nullable:true })
+  @JoinColumn({ name:'electrodomesticoId' })
+  electrodomestico:Electrodomestico;
+
+  @Column({ nullable:true })
+  electrodomesticoId:number;
 }

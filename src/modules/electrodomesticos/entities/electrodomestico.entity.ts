@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Usuario } from '../../usuarios/entities/usuario.entity';
-
+import { Servicio } from '../../ordenes/servicios/entities/servicio.entity';
 @Entity('electrodomesticos')
 export class Electrodomestico {
   @PrimaryGeneratedColumn()
@@ -27,4 +27,7 @@ export class Electrodomestico {
   @ManyToOne(() => Usuario)
   @JoinColumn({ name: 'clientId' })
   client: Usuario;
+
+  @OneToMany(()=>Servicio, (s)=>s.electrodomestico)
+  servicios:Servicio[];
 }
