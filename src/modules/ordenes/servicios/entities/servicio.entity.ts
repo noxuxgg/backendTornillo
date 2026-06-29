@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { Presupuesto } from '../../presupuestos/entities/presupuesto.entity';
 import { Diagnostico } from '../../../diagnosticos/entities/diagnostico.entity';
+import { Usuario } from '../../../usuarios/entities/usuario.entity';
 
 @Entity('servicios')
 export class Servicio {
@@ -27,6 +28,22 @@ export class Servicio {
 
   @Column({ type: 'varchar', length: 50, default: 'Pendiente' })
   estado: string;
+
+  // 1. Relación con el Cliente
+    @Column({nullable:true})
+    clienteId:number;
+
+    @ManyToOne(()=>Usuario,(usuario)=>usuario.serviciosComoCliente)
+    @JoinColumn({name:'clienteId'})
+    cliente:Usuario;
+
+// 2. Relación con el Técnico
+    @Column({nullable:true})
+    tecnicoId:number;
+
+@ManyToOne(()=>Usuario,(usuario)=>usuario.serviciosComoTecnico)
+@JoinColumn({name:'tecnicoId'})
+tecnico:Usuario;
 
   @OneToMany(() => Presupuesto, presupuesto => presupuesto.servicio)
   presupuestos: Presupuesto[];
