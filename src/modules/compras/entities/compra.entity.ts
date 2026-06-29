@@ -9,7 +9,7 @@ export class Compra {
   @Column({ type: 'integer' })
   proveedorId: number;
 
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   fechaCompra: Date;
 
   @Column({ type: 'varchar', length: 50 })

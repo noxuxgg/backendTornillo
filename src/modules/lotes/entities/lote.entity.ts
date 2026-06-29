@@ -22,7 +22,7 @@ export class Lote {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   stockActual: number;
 
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   fechaIngreso: Date;
 
   @ManyToOne(() => Insumo, (insumo) => insumo.lotes)

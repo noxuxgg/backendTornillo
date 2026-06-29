@@ -6,12 +6,12 @@ export class Factura {
   id: number;
 
   @Column({ type: 'integer' })
-  servicioId: number; // Relación lógica con el módulo del Dev 2
+  servicioId: number;
 
   @Column({ type: 'varchar', length: 100 })
   numeroFactura: string;
 
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   fechaEmision: Date;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
