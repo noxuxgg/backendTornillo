@@ -18,7 +18,7 @@ export class DetalleInsumosServicio {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   precioAplicado: number;
 
-  @ManyToOne(() => Lote, (lote) => lote.detallesServicio)
+  @ManyToOne(() => Lote, (lote) => lote.detalleInsumosServicio) // 👈 corregido
   @JoinColumn({ name: 'loteId' })
   lote: Lote;
 }

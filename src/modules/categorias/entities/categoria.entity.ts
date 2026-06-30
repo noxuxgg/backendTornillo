@@ -3,15 +3,15 @@ import { Insumo } from '../../insumos/entities/insumo.entity';
 
 @Entity('categorias')
 export class Categoria {
-  @PrimaryGeneratedColumn({ type: 'integer' })
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ nullable: true })
   nombre: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ nullable: true })
   descripcion: string;
 
-  @OneToMany(() => Insumo, (insumo) => insumo.categoria)
+  @OneToMany(() => Insumo, i => i.categoria)
   insumos: Insumo[];
 }

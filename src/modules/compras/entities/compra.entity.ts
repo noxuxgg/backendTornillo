@@ -1,52 +1,28 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import { DetalleCompra } from '../../detalle-compras/entities/detalle-compra.entity';
 import { Proveedor } from '../../proveedores/entities/proveedore.entity';
 
 @Entity('compras')
 export class Compra {
-  @PrimaryGeneratedColumn({ type: 'integer' })
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'integer' })
+  @Column()
   proveedorId: number;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamp', nullable: true })
   fechaCompra: Date;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ nullable: true })
   estado: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   total: number;
 
-  @ManyToOne(() => Proveedor, (proveedor) => proveedor.compras)
+  @ManyToOne(() => Proveedor, p => p.compras)
   @JoinColumn({ name: 'proveedorId' })
   proveedor: Proveedor;
 
-  @OneToMany(() => DetalleCompra, (detalle) => detalle.compra)
-  detalles: DetalleCompra[];
-}
-
-@Entity('detalleCompras')
-export class DetalleCompra {
-  @PrimaryGeneratedColumn({ type: 'integer' })
-  id: number;
-
-  @Column({ type: 'integer' })
-  compraId: number;
-
-  @Column({ type: 'integer' })
-  insumoId: number;
-
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  cantidad: number;
-
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  precioUnitario: number;
-
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  subtotal: number;
-
-  @ManyToOne(() => Compra, (compra) => compra.detalles)
-  @JoinColumn({ name: 'compraId' })
-  compra: Compra;
+  @OneToMany(() => DetalleCompra, dc => dc.compra)
+  detalleCompras: DetalleCompra[];
 }

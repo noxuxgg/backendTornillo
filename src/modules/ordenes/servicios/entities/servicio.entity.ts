@@ -1,7 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, OneToOne, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { Presupuesto } from '../../presupuestos/entities/presupuesto.entity';
 import { Diagnostico } from '../../../diagnosticos/entities/diagnostico.entity';
 import { Usuario } from '../../../usuarios/entities/usuario.entity';
+import { Pago } from '../../../pagos/entities/pago.entity';
+import { Factura } from '../../../facturas/entities/factura.entity';
+
 import { Electrodomestico } from '../../../electrodomesticos/entities/electrodomestico.entity';
 @Entity('servicios')
 export class Servicio {
@@ -58,6 +61,11 @@ tecnico:Usuario;
   @OneToMany(() => Diagnostico, (diagnostico) => diagnostico.servicio)
   diagnosticos: Diagnostico[];
 
+    @OneToOne(() => Pago, (pago) => pago.servicio)
+  pago: Pago;
+
+  @OneToOne(() => Factura, (factura) => factura.servicio)
+  factura: Factura;
   // NUEVA RELACIÓN A ELECTRODOMÉSTICOS
   @ManyToOne(()=>Electrodomestico, { eager:true, nullable:true })
   @JoinColumn({ name:'electrodomesticoId' })

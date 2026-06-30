@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { InsumosService } from './insumos.service';
+import { Insumo } from './entities/insumo.entity';
 import { InsumosController } from './insumos.controller';
-import { Insumo } from './entities/insumo.entity'; 
+import { InsumosService } from './insumos.service';
+
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Insumo]),
-  ],
+  imports: [TypeOrmModule.forFeature([Insumo])],
   controllers: [InsumosController],
   providers: [InsumosService],
+  exports: [TypeOrmModule]
 })
 export class InsumosModule {}

@@ -3,21 +3,21 @@ import { Compra } from '../../compras/entities/compra.entity';
 
 @Entity('proveedores')
 export class Proveedor {
-  @PrimaryGeneratedColumn({ type: 'integer' })
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ nullable: true })
   nombre: string;
 
-  @Column({ type: 'varchar', length: 50, nullable: true })
+  @Column({ nullable: true })
   telefono: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ nullable: true })
   direccion: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Column({ nullable: true })
   tipoProveedor: string;
 
-  @OneToMany(() => Compra, (compra) => compra.proveedor)
+  @OneToMany(() => Compra, c => c.proveedor)
   compras: Compra[];
 }
