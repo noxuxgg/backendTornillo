@@ -24,7 +24,7 @@ export class InsumosService {
   async findOne(id: number): Promise<Insumo> {
     const insumo = await this.insumoRepository.findOne({
       where: { id },
-      relations: ['categoria', 'unidadesMedida'],
+      relations: ['categoria', 'unidadMedida'],
     });
     if (!insumo) throw new NotFoundException(`Insumo con ID ${id} no encontrado`);
     return insumo;

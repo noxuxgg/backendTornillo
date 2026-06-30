@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UnidadMedida } from './entities/unidades-medida.entity';
 import { CreateUnidadesMedidaDto } from './dto/create-unidades-medida.dto';
+import { UpdateUnidadesMedidaDto } from './dto/update-unidades-medida.dto';
 
 @Injectable()
 export class UnidadesMedidaService {
@@ -25,12 +26,18 @@ export class UnidadesMedidaService {
     if (!um) throw new NotFoundException(`Unidad de Medida con ID ${id} no encontrada`);
     return um;
   }
+  async update(id: number, updateDto: UpdateUnidadesMedidaDto) {
+      // Usamos umRepository (el nombre definido en el constructor)
+      await this.umRepository.update(id, updateDto);
+      return await this.umRepository.findOneBy({ id }); 
+    }
 
-  update(id: number, updateUnidadesMedidaDto: any) {
-    return `Este método actualiza la unidad de medida con ID #${id}`;
-  }
-
-  remove(id: number) {
-    return `Este método elimina la unidad de medida con ID #${id}`;
+  async remove(id: number) {
+    // 1. Verificamos que exista antes de eliminar
+      const um = await this.findOne(id); 
+      // 2. Eliminamos
+      await this.umRepository.remove(um);
+      // 3. Retornamos algo vacío o confirmación (Angular ahora no fallará al parsear)
+      return { mensaje: 'Eliminado correctamente' }; 
   }
 }
