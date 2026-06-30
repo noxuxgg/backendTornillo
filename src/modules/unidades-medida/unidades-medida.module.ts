@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UnidadesMedidaService } from './unidades-medida.service';
 import { UnidadesMedidaController } from './unidades-medida.controller';
-import { UnidadesMedida } from './entities/unidades-medida.entity';
+import { UnidadesMedidaService } from './unidades-medida.service';
+import { UnidadMedida } from './entities/unidades-medida.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UnidadesMedida])],
+  imports: [TypeOrmModule.forFeature([UnidadMedida])],
   controllers: [UnidadesMedidaController],
   providers: [UnidadesMedidaService],
-  exports: [UnidadesMedidaService],
+  exports: [TypeOrmModule]
 })
 export class UnidadesMedidaModule {}

@@ -1,34 +1,35 @@
+// lote/entities/lote.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Insumo } from '../../insumos/entities/insumo.entity';
 import { DetalleInsumosServicio } from '../../detalle-insumos-servicio/entities/detalle-insumos-servicio.entity';
 
 @Entity('lotes')
 export class Lote {
-  @PrimaryGeneratedColumn({ type: 'integer' })
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'integer' })
+  @Column()
   insumoId: number;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ nullable: true })
   codigoLote: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   precioCompra: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   precioVentaSugerido: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   stockActual: number;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamp', nullable: true })
   fechaIngreso: Date;
 
   @ManyToOne(() => Insumo, (insumo) => insumo.lotes)
   @JoinColumn({ name: 'insumoId' })
   insumo: Insumo;
 
-  @OneToMany(() => DetalleInsumosServicio, (dis) => dis.lote)
-  detallesServicio: DetalleInsumosServicio[];
+  @OneToMany(() => DetalleInsumosServicio, (detalle) => detalle.lote)
+  detalleInsumosServicio: DetalleInsumosServicio[];  // 👈 este es el nombre real
 }

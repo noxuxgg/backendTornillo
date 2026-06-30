@@ -1,36 +1,40 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Categoria } from '../../categorias/entities/categoria.entity';
-import { UnidadesMedida } from '../../unidades-medida/entities/unidades-medida.entity';
 import { Lote } from '../../lotes/entities/lote.entity';
+import { DetalleCompra } from '../../detalle-compras/entities/detalle-compra.entity';
+import { UnidadMedida } from '../../unidades-medida/entities/unidades-medida.entity';
 
 @Entity('insumos')
 export class Insumo {
-  @PrimaryGeneratedColumn({ type: 'integer' })
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'integer' })
+  @Column()
   categoriaId: number;
 
-  @Column({ type: 'integer' })
+  @Column()
   unidadMedidadId: number;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ nullable: true })
   codigoBase: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ nullable: true })
   nombre: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ nullable: true })
   descripcion: string;
 
-  @ManyToOne(() => Categoria, (categoria) => categoria.insumos)
+  @ManyToOne(() => Categoria, c => c.insumos)
   @JoinColumn({ name: 'categoriaId' })
   categoria: Categoria;
 
-  @ManyToOne(() => UnidadesMedida, (um) => um.insumos)
+  @ManyToOne(() => UnidadMedida, u => u.insumos)
   @JoinColumn({ name: 'unidadMedidadId' })
-  unidadesMedida: UnidadesMedida;
+  unidadMedida: UnidadMedida;
 
-  @OneToMany(() => Lote, (lote) => lote.insumo)
+  @OneToMany(() => Lote, l => l.insumo)
   lotes: Lote[];
+
+  @OneToMany(() => DetalleCompra, dc => dc.insumo)
+  detalleCompras: DetalleCompra[];
 }

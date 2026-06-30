@@ -4,30 +4,30 @@ import { Insumo } from '../../insumos/entities/insumo.entity';
 
 @Entity('detalleCompras')
 export class DetalleCompra {
-  @PrimaryGeneratedColumn({ type: 'integer' })
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'integer' })
+  @Column()
   compraId: number;
 
-  @Column({ type: 'integer' })
+  @Column()
   insumoId: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   cantidad: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   precioUnitario: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   subtotal: number;
 
-  // Relaciones ManyToOne hacia Compra e Insumo
-  @ManyToOne(() => Compra, (compra) => compra.id)
+  @ManyToOne(() => Compra, c => c.detalleCompras)
   @JoinColumn({ name: 'compraId' })
   compra: Compra;
 
-  @ManyToOne(() => Insumo, (insumo) => insumo.id)
+  // ⚠️ Esta es la relación que faltaba en DBBeaver
+  @ManyToOne(() => Insumo, i => i.detalleCompras)
   @JoinColumn({ name: 'insumoId' })
   insumo: Insumo;
 }

@@ -1,25 +1,30 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { Servicio } from '../../ordenes/servicios/entities/servicio.entity';
 
 @Entity('facturas')
 export class Factura {
-  @PrimaryGeneratedColumn({ type: 'integer' })
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'integer' })
+  @Column()
   servicioId: number;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ nullable: true })
   numeroFactura: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamp', nullable: true })
   fechaEmision: Date;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2, nullable: true })
   monto: number;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ nullable: true })
   nit: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ nullable: true })
   razonSocial: string;
+
+  @OneToOne(() => Servicio, (servicio) => servicio.factura)
+  @JoinColumn({ name: 'servicioId' })
+  servicio: Servicio;
 }
