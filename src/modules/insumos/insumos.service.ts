@@ -17,8 +17,7 @@ export class InsumosService {
   }
 
   async findAll(): Promise<Insumo[]> {
-    // Usamos relations para traer la info de categoría y unidad si lo necesitas en Bruno
-    return await this.insumoRepository.find({ relations: ['categoria', 'unidadesMedida'] });
+    return await this.insumoRepository.find({ relations: ['categoria', 'unidadMedida'] }); // ✅ sin "s"
   }
 
   async findOne(id: number): Promise<Insumo> {
