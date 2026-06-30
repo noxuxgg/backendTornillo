@@ -3,26 +3,38 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Categoria } from './entities/categoria.entity';
 import { CreateCategoriaDto } from './dto/create-categoria.dto';
+import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 
 @Injectable()
 export class CategoriasService {
   constructor(
     @InjectRepository(Categoria)
-    private readonly categoriaRepository: Repository<Categoria>,
+    private readonly repo: Repository<Categoria>,
   ) {}
 
-  async create(createCategoriaDto: CreateCategoriaDto): Promise<Categoria> {
-    const nueva = this.categoriaRepository.create(createCategoriaDto);
-    return await this.categoriaRepository.save(nueva);
+  create(dto: CreateCategoriaDto) {
+    const nueva = this.repo.create(dto);
+    return this.repo.save(nueva);
   }
 
-  async findAll(): Promise<Categoria[]> {
-    return await this.categoriaRepository.find();
+  findAll() {
+    return this.repo.find();
   }
 
-  async findOne(id: number): Promise<Categoria> {
-    const categoria = await this.categoriaRepository.findOneBy({ id });
-    if (!categoria) throw new NotFoundException(`Categoría con ID ${id} no encontrada`);
+  async findOne(id: number) {
+    const categoria = await this.repo.findOneBy({ id });
+    if (!categoria) throw new NotFoundException(`Categoría ${id} no encontrada`);
     return categoria;
+  }
+
+  async update(id: number, dto: UpdateCategoriaDto) {
+    const categoria = await this.findOne(id);
+    Object.assign(categoria, dto);
+    return this.repo.save(categoria);
+  }
+
+  async remove(id: number) {
+    const categoria = await this.findOne(id);
+    return this.repo.remove(categoria);
   }
 }
