@@ -19,14 +19,14 @@ export class ServiciosService {
 
   async findAll():Promise<Servicio[]> {
     return await this.servRepo.find({
-      relations:['cliente','tecnico']
+      relations:['cliente','tecnico','electrodomestico']
     });
   }
 
   async findOne(id:number):Promise<Servicio> {
     const reg=await this.servRepo.findOne({
       where:{id},
-      relations:['cliente','tecnico']
+      relations:['cliente','tecnico','electrodomestico']
     });
     if(!reg) throw new NotFoundException(`Servicio #${id} no encontrado`);
     return reg;

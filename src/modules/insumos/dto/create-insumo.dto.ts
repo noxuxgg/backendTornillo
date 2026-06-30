@@ -7,7 +7,7 @@ export class CreateInsumoDto {
 
   @IsNumber()
   @IsNotEmpty()
-  unidadMedidadId: number;
+  unidadMedidaId: number;
 
   @IsString()
   @IsNotEmpty()
