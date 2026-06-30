@@ -5,6 +5,8 @@ import { Usuario } from '../../../usuarios/entities/usuario.entity';
 import { Pago } from '../../../pagos/entities/pago.entity';
 import { Factura } from '../../../facturas/entities/factura.entity';
 
+import { DetalleInsumosServicio } from '../../../detalle-insumos-servicio/entities/detalle-insumos-servicio.entity';
+
 import { Electrodomestico } from '../../../electrodomesticos/entities/electrodomestico.entity';
 @Entity('servicios')
 export class Servicio {
@@ -66,6 +68,10 @@ tecnico:Usuario;
 
   @OneToOne(() => Factura, (factura) => factura.servicio)
   factura: Factura;
+
+    @OneToMany(() => DetalleInsumosServicio, (detalle) => detalle.servicio)
+  detalleInsumosServicio: DetalleInsumosServicio[];
+
   // NUEVA RELACIÓN A ELECTRODOMÉSTICOS
   @ManyToOne(()=>Electrodomestico, { eager:true, nullable:true })
   @JoinColumn({ name:'electrodomesticoId' })
