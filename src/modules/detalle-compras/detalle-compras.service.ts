@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DetalleCompra } from './entities/detalle-compra.entity';
 import { CreateDetalleCompraDto } from './dto/create-detalle-compra.dto';
+import { UpdateDetalleCompraDto } from './dto/update-detalle-compra.dto';
 
 @Injectable()
 export class DetalleComprasService {
@@ -27,5 +28,16 @@ export class DetalleComprasService {
     });
     if (!detalle) throw new NotFoundException(`Detalle de compra con ID ${id} no encontrado`);
     return detalle;
+  }
+
+  async update(id: number, dto: UpdateDetalleCompraDto): Promise<DetalleCompra> {
+    const detalle = await this.findOne(id);
+    Object.assign(detalle, dto);
+    return await this.detalleRepository.save(detalle);
+  }
+
+  async remove(id: number): Promise<DetalleCompra> {
+    const detalle = await this.findOne(id);
+    return await this.detalleRepository.remove(detalle);
   }
 }

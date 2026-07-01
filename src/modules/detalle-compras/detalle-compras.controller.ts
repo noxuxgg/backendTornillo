@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { DetalleComprasService } from './detalle-compras.service';
 import { CreateDetalleCompraDto } from './dto/create-detalle-compra.dto';
+import { UpdateDetalleCompraDto } from './dto/update-detalle-compra.dto';
 
 @Controller('detalle-compras')
 export class DetalleComprasController {
@@ -17,7 +18,17 @@ export class DetalleComprasController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.detalleComprasService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.detalleComprasService.findOne(id);
+  }
+
+  @Patch(':id')
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateDetalleCompraDto: UpdateDetalleCompraDto) {
+    return this.detalleComprasService.update(id, updateDetalleCompraDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.detalleComprasService.remove(id);
   }
 }
