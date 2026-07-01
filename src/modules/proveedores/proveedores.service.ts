@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Proveedor } from './entities/proveedore.entity';
 import { CreateProveedorDto } from './dto/create-proveedor.dto';
+import { UpdateProveedorDto } from './dto/update-proveedor.dto';
 
 @Injectable()
 export class ProveedoresService {
@@ -26,11 +27,14 @@ export class ProveedoresService {
     return proveedor;
   }
 
-  update(id: number, updateProveedorDto: any) {
-    return `Este método actualiza el proveedor con ID #${id}`;
+  async update(id: number, dto: UpdateProveedorDto): Promise<Proveedor> {
+    const proveedor = await this.findOne(id);
+    Object.assign(proveedor, dto);
+    return await this.proveedorRepository.save(proveedor);
   }
 
-  remove(id: number) {
-    return `Este método elimina el proveedor con ID #${id}`;
+  async remove(id: number): Promise<Proveedor> {
+    const proveedor = await this.findOne(id);
+    return await this.proveedorRepository.remove(proveedor);
   }
 }
